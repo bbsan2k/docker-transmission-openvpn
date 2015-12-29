@@ -9,7 +9,6 @@ if [ ! -d "$vpn_provider_configs" ]; then
 fi
 
 #Force Google DNS
-echo "Force Google DNS"
 echo "DOCKER_OPTS='--dns 8.8.8.8 --dns 8.8.4.4'" >> /etc/default/docker
 
 echo "Using OpenVPN provider: $OPENVPN_PROVIDER"
