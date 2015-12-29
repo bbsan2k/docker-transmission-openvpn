@@ -11,9 +11,8 @@ openvpn:
     OPENVPN_USERNAME: username
     OPENVPN_PASSWORD: password
   dns:
-	- 8.8.8.8
-	- 8.8.4.4
-	
+    - 8.8.8.8
+    - 8.8.4.4	
 nginx:
   image: library/nginx
   ports:
