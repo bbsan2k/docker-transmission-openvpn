@@ -98,5 +98,5 @@ ENV OPENVPN_USERNAME=**None** \
     "TRANSMISSION_HOME=/data/transmission-home"
 
 # Expose port and run
-EXPOSE 9091
+EXPOSE 9091 22
 CMD ["/etc/openvpn/start.sh"]

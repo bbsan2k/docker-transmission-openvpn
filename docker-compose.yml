@@ -3,6 +3,7 @@ openvpn:
   privileged: true
   ports:
     - "9091:9091"
+	- "22:22"
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - /your/storage/path/:/data
