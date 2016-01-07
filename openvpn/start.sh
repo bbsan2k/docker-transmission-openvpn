@@ -31,8 +31,8 @@ else
 fi
 
 #Check for OpenVPN Credentials 
-openvpn-credentials=/volumes/config/openvpn-credentials.txt
-if [ ! -f "/volumes/config/openvpn-credentials.txt" ];
+openvpn_credentials="/volumes/config/openvpn-credentials.txt"
+if [ ! -f "$openvpn_credentials" ];
 then 
 	# add OpenVPN user/pass if not on storage
 	if [ "${OPENVPN_USERNAME}" = "**None**" ] || [ "${OPENVPN_PASSWORD}" = "**None**" ] ; then
@@ -46,7 +46,7 @@ then
 	  chmod 600 /config/openvpn-credentials.txt
 	fi
 else 
-	echo "$openvpn-credentials found. Proceeding with credentials from disk"
+	echo "$openvpn_credentials found. Proceeding with credentials from disk"
 fi
 
 #Check for Transmission Credentials 
