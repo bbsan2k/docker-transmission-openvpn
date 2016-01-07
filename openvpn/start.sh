@@ -31,7 +31,7 @@ else
 fi
 
 #Check for OpenVPN Credentials 
-openvpn-credentials="/volumes/config/openvpn-credentials.txt"
+openvpn-credentials=/volumes/config/openvpn-credentials.txt
 if [ ! -f "/volumes/config/openvpn-credentials.txt" ];
 then 
 	# add OpenVPN user/pass if not on storage
