@@ -32,9 +32,9 @@ fi
 
 #Check for OpenVPN Credentials 
 openvpn-credentials="/volumes/config/openvpn-credentials.txt"
-if [ ! -f "$openvpn-credentials" ];
+if [ ! -f "/volumes/config/openvpn-credentials.txt" ];
 then 
-	# add OpenVPN user/pass if not on disk
+	# add OpenVPN user/pass if not on storage
 	if [ "${OPENVPN_USERNAME}" = "**None**" ] || [ "${OPENVPN_PASSWORD}" = "**None**" ] ; then
 	 echo "OpenVPN credentials not set. Exiting."
 	 exit 1
