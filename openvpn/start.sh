@@ -50,24 +50,24 @@ else
 fi
 
 #Check for Transmission Credentials 
-transmission-credentials="/volumes/config/transmission-credentials.txt"
-if [ ! -f "$transmission-credentials" ];
+transmission_credentials="/volumes/config/transmission-credentials.txt"
+if [ ! -f "$transmission_credentials" ];
 then
 	# add transmission credentials from env vars
 	echo $TRANSMISSION_RPC_USERNAME > /volumes/config/transmission-credentials.txt
 	echo $TRANSMISSION_RPC_PASSWORD >> /volumes/config/transmission-credentials.txt
 else 
-	echo "$transmission-credentials found. Proceeding with credentials from disk"
+	echo "$transmission_credentials found. Proceeding with credentials from disk"
 fi
 
 #Check for Transmission Configuration 
-transmission-configuration="/volumes/data/transmission-home/settings.json"
-if [ ! -f "$transmission-configuration" ];
+transmission_configuration="/volumes/data/transmission-home/settings.json"
+if [ ! -f "$transmission_configuration" ];
 then
 	# Persist transmission settings for use by transmission-daemon
 	dockerize -template /etc/transmission/environment-variables.tmpl:/etc/transmission/environment-variables.sh /bin/true
 else 
-	echo "$transmission-configuration found. Proceeding with configuration from disk"
+	echo "$transmission_configuration found. Proceeding with configuration from disk"
 fi
 
 exec openvpn --config "$OPENVPN_CONFIG"

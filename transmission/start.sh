@@ -1,13 +1,13 @@
 #!/bin/sh
 
 #Check for Transmission Configuration 
-transmission-configuration="/volumes/data/transmission-home/settings.json"
+transmission_configuration="/volumes/data/transmission-home/settings.json"
 if [ ! -f "$transmission-configuration" ];
 then
 	# Source our persisted env variables from container startup
 	. /etc/transmission/environment-variables.sh
 else 
-	echo "$transmission-configuration found. Proceeding with configuration from disk"
+	echo "$transmission_configuration found. Proceeding with configuration from disk"
 fi
 	
 tun0ip=$(ifconfig tun0 | sed -n '2 p' | awk '{print $2}' | cut -d: -f2)
@@ -16,15 +16,14 @@ export TRANSMISSION_BIND_ADDRESS_IPV4=${tun0ip}
 
 
 #Check for Transmission Configuration 
-transmission-configuration="/volumes/data/transmission-home/settings.json"
-if [ ! -f "$transmission-configuration" ];
+if [ ! -f "$transmission_configuration" ];
 then
 	echo "Generating transmission settings.json from env variables"
 	# Ensure TRANSMISSION_HOME is created
 	mkdir -p ${TRANSMISSION_HOME}
 	dockerize -template /etc/transmission/settings.tmpl:${TRANSMISSION_HOME}/settings.json /bin/true
 else
-	echo "$transmission-configuration found. Proceeding with configuration from disk"
+	echo "$transmission_configuration found. Proceeding with configuration from disk"
 fi
 
 if [ ! -e "/dev/random" ]; then
