@@ -1,8 +1,9 @@
 #!/bin/sh
 
 #Check for Transmission Configuration 
-transmission-configuration=/volume/transmission-home/settings.json
+transmission-configuration=/volumes/data/transmission-home/settings.json
 if [ ! -f "$transmission-configuration" ]
+then
 	# Source our persisted env variables from container startup
 	. /etc/transmission/environment-variables.sh
 else 
@@ -13,10 +14,18 @@ tun0ip=$(ifconfig tun0 | sed -n '2 p' | awk '{print $2}' | cut -d: -f2)
 echo "Updating TRANSMISSION_BIND_ADDRESS_IPV4 to tun0 ip: ${tun0ip}"
 export TRANSMISSION_BIND_ADDRESS_IPV4=${tun0ip}
 
-echo "Generating transmission settings.json from env variables"
-# Ensure TRANSMISSION_HOME is created
-mkdir -p ${TRANSMISSION_HOME}
-dockerize -template /etc/transmission/settings.tmpl:${TRANSMISSION_HOME}/settings.json /bin/true
+
+#Check for Transmission Configuration 
+transmission-configuration=/volumes/data/transmission-home/settings.json
+if [ ! -f "$transmission-configuration" ]
+then
+	echo "Generating transmission settings.json from env variables"
+	# Ensure TRANSMISSION_HOME is created
+	mkdir -p ${TRANSMISSION_HOME}
+	dockerize -template /etc/transmission/settings.tmpl:${TRANSMISSION_HOME}/settings.json /bin/true
+else
+	echo "$transmission-configuration found. Proceeding with configuration from disk"
+fi
 
 if [ ! -e "/dev/random" ]; then
   # Avoid "Fatal: no entropy gathering module detected" error

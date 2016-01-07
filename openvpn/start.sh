@@ -31,7 +31,7 @@ else
 fi
 
 #Check for OpenVPN Credentials 
-openvpn-credentials=/config/openvpn-credentials.txt
+openvpn-credentials=/volumes/config/openvpn-credentials.txt
 if [ ! -f "$openvpn-credentials" ]
 then 
 	# add OpenVPN user/pass if not on disk
@@ -40,9 +40,9 @@ then
 	 exit 1
 	else
 	  echo "Setting OPENVPN credentials..."
-	  mkdir -p /config
-	  echo $OPENVPN_USERNAME > /config/openvpn-credentials.txt
-	  echo $OPENVPN_PASSWORD >> /config/openvpn-credentials.txt
+	  mkdir -p /volumes/config
+	  echo $OPENVPN_USERNAME > /volumes/config/openvpn-credentials.txt
+	  echo $OPENVPN_PASSWORD >> /volumes/config/openvpn-credentials.txt
 	  chmod 600 /config/openvpn-credentials.txt
 	fi
 else 
@@ -50,18 +50,18 @@ else
 fi
 
 #Check for Transmission Credentials 
-transmission-credentials=/config/transmission-credentials.txt
+transmission-credentials=/volumes/config/transmission-credentials.txt
 if [ ! -f "$transmission-credentials" ]
 then
 	# add transmission credentials from env vars
-	echo $TRANSMISSION_RPC_USERNAME > /config/transmission-credentials.txt
-	echo $TRANSMISSION_RPC_PASSWORD >> /config/transmission-credentials.txt
+	echo $TRANSMISSION_RPC_USERNAME > /volumes/config/transmission-credentials.txt
+	echo $TRANSMISSION_RPC_PASSWORD >> /volumes/config/transmission-credentials.txt
 else 
 	echo "$transmission-credentials found. Proceeding with credentials from disk"
 fi
 
 #Check for Transmission Configuration 
-transmission-configuration=/volume/transmission-home/settings.json
+transmission-configuration=/volumes/data/transmission-home/settings.json
 if [ ! -f "$transmission-configuration" ]
 	# Persist transmission settings for use by transmission-daemon
 	dockerize -template /etc/transmission/environment-variables.tmpl:/etc/transmission/environment-variables.sh /bin/true
