@@ -1,8 +1,14 @@
 #!/bin/sh
 
-# Source our persisted env variables from container startup
-. /etc/transmission/environment-variables.sh
-
+#Check for Transmission Configuration 
+transmission-configuration=/volume/transmission-home/settings.json
+if [ ! -f "$transmission-configuration" ]
+	# Source our persisted env variables from container startup
+	. /etc/transmission/environment-variables.sh
+else 
+	echo "$transmission-configuration found. Proceeding with configuration from disk"
+fi
+	
 tun0ip=$(ifconfig tun0 | sed -n '2 p' | awk '{print $2}' | cut -d: -f2)
 echo "Updating TRANSMISSION_BIND_ADDRESS_IPV4 to tun0 ip: ${tun0ip}"
 export TRANSMISSION_BIND_ADDRESS_IPV4=${tun0ip}

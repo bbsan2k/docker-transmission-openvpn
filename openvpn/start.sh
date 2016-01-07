@@ -30,23 +30,53 @@ else
 	OPENVPN_CONFIG=$vpn_provider_configs/default.ovpn
 fi
 
-# add OpenVPN user/pass
-if [ "${OPENVPN_USERNAME}" = "**None**" ] || [ "${OPENVPN_PASSWORD}" = "**None**" ] ; then
- echo "OpenVPN credentials not set. Exiting."
- exit 1
-else
-  echo "Setting OPENVPN credentials..."
-  mkdir -p /config
-  echo $OPENVPN_USERNAME > /config/openvpn-credentials.txt
-  echo $OPENVPN_PASSWORD >> /config/openvpn-credentials.txt
-  chmod 600 /config/openvpn-credentials.txt
+#Check for OpenVPN Credentials 
+openvpn-credentials=/config/openvpn-credentials.txt
+if [ ! -f "$openvpn-credentials" ]
+then 
+	# add OpenVPN user/pass if not on disk
+	if [ "${OPENVPN_USERNAME}" = "**None**" ] || [ "${OPENVPN_PASSWORD}" = "**None**" ] ; then
+	 echo "OpenVPN credentials not set. Exiting."
+	 exit 1
+	else
+	  echo "Setting OPENVPN credentials..."
+	  mkdir -p /config
+	  echo $OPENVPN_USERNAME > /config/openvpn-credentials.txt
+	  echo $OPENVPN_PASSWORD >> /config/openvpn-credentials.txt
+	  chmod 600 /config/openvpn-credentials.txt
+	fi
+else 
+	echo "$openvpn-credentials found. Proceeding with credentials from disk"
 fi
 
-# add transmission credentials from env vars
-echo $TRANSMISSION_RPC_USERNAME > /config/transmission-credentials.txt
-echo $TRANSMISSION_RPC_PASSWORD >> /config/transmission-credentials.txt
+#Check for Transmission Credentials 
+transmission-credentials=/config/transmission-credentials.txt
+if [ ! -f "$transmission-credentials" ]
+then
+	# add transmission credentials from env vars
+	echo $TRANSMISSION_RPC_USERNAME > /config/transmission-credentials.txt
+	echo $TRANSMISSION_RPC_PASSWORD >> /config/transmission-credentials.txt
+else 
+	echo "$transmission-credentials found. Proceeding with credentials from disk"
+fi
 
-# Persist transmission settings for use by transmission-daemon
-dockerize -template /etc/transmission/environment-variables.tmpl:/etc/transmission/environment-variables.sh /bin/true
+#Check for Transmission Configuration 
+transmission-configuration=/volume/transmission-home/settings.json
+if [ ! -f "$transmission-configuration" ]
+	# Persist transmission settings for use by transmission-daemon
+	dockerize -template /etc/transmission/environment-variables.tmpl:/etc/transmission/environment-variables.sh /bin/true
+else 
+	echo "$transmission-configuration found. Proceeding with configuration from disk"
+fi
+
 
 exec openvpn --config "$OPENVPN_CONFIG"
+
+
+file="/etc/hosts"
+if [ -f "$file" ]
+then
+	echo "$file found."
+else
+	echo "$file not found."
+fi
