@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #Check for Transmission Configuration 
-transmission-configuration=/volumes/data/transmission-home/settings.json
+transmission-configuration="/volumes/data/transmission-home/settings.json"
 if [ ! -f "$transmission-configuration" ];
 then
 	# Source our persisted env variables from container startup
@@ -16,7 +16,7 @@ export TRANSMISSION_BIND_ADDRESS_IPV4=${tun0ip}
 
 
 #Check for Transmission Configuration 
-transmission-configuration=/volumes/data/transmission-home/settings.json
+transmission-configuration="/volumes/data/transmission-home/settings.json"
 if [ ! -f "$transmission-configuration" ];
 then
 	echo "Generating transmission settings.json from env variables"

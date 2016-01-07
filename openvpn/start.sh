@@ -18,8 +18,8 @@ then
 	if [ -f $vpn_provider_configs/"${OPENVPN_CONFIG}".ovpn ];
   	then
 		echo "Starting OpenVPN using config ${OPENVPN_CONFIG}.ovpn"
-		OPENVPN_CONFIG=$vpn_provider_configs/${OPENVPN_CONFIG}.ovpn
 		echo $OPENVPN_CONFIG > /volumes/config/openvpn-config.txt
+		OPENVPN_CONFIG=$vpn_provider_configs/${OPENVPN_CONFIG}.ovpn
 	else
 		echo "Supplied config ${OPENVPN_CONFIG}.ovpn could not be found."
 		echo "Using default OpenVPN gateway for provider ${vpn_provider}"
@@ -31,7 +31,7 @@ else
 fi
 
 #Check for OpenVPN Credentials 
-openvpn-credentials=/volumes/config/openvpn-credentials.txt
+openvpn-credentials="/volumes/config/openvpn-credentials.txt"
 if [ ! -f "$openvpn-credentials" ];
 then 
 	# add OpenVPN user/pass if not on disk
@@ -50,7 +50,7 @@ else
 fi
 
 #Check for Transmission Credentials 
-transmission-credentials=/volumes/config/transmission-credentials.txt
+transmission-credentials="/volumes/config/transmission-credentials.txt"
 if [ ! -f "$transmission-credentials" ];
 then
 	# add transmission credentials from env vars
@@ -61,7 +61,7 @@ else
 fi
 
 #Check for Transmission Configuration 
-transmission-configuration=/volumes/data/transmission-home/settings.json
+transmission-configuration="/volumes/data/transmission-home/settings.json"
 if [ ! -f "$transmission-configuration" ];
 then
 	# Persist transmission settings for use by transmission-daemon
