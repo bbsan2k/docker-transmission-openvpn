@@ -5,8 +5,8 @@
 FROM ubuntu:14.04
 MAINTAINER Kristian Haugene
 
-VOLUME /data
-VOLUME /config
+VOLUME /volumes/data
+VOLUME /volumes/config
 
 # Update packages and install software
 RUN apt-get update \
