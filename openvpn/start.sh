@@ -1,14 +1,21 @@
 #!/bin/sh
 set -x
-vpn_provider="$(echo $OPENVPN_PROVIDER | tr '[A-Z]' '[a-z]')"
-vpn_provider_configs="/etc/openvpn/$vpn_provider"
-if [ ! -d "$vpn_provider_configs" ]; 
-then
-	echo "Could not find OpenVPN provider: $OPENVPN_PROVIDER"
-	echo "Please check your settings."
-	exit 1
+
+#Check for OpenVPN Provider 
+if [ ! -f "/volumes/config/openvpn-provider.txt" ];
+then 
+	vpn_provider="$(echo $OPENVPN_PROVIDER | tr '[A-Z]' '[a-z]')"
+	vpn_provider_configs="/etc/openvpn/$vpn_provider"
+	if [ ! -d "$vpn_provider_configs" ]; 
+	then
+		echo "Could not find OpenVPN provider: $OPENVPN_PROVIDER"
+		echo "Please check your settings."
+		exit 1
+	else 
+		echo $OPENVPN_PROVIDER > /volumes/config/openvpn-provider.txt
+	fi
 else 
-	echo $OPENVPN_PROVIDER > /volumes/config/openvpn-provider.txt
+	vpn_provider="/volumes/config/openvpn-provider.txt"
 fi
 
 echo "Using OpenVPN provider: $OPENVPN_PROVIDER"
