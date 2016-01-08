@@ -15,7 +15,7 @@ then
 		echo $OPENVPN_PROVIDER > /volumes/config/openvpn-provider.txt
 	fi
 else 
-	vpn_provider="/volumes/config/openvpn-provider.txt"
+	vpn_provider=`cat /volumes/config/openvpn-provider.txt`
 	vpn_provider_configs="/etc/openvpn/$vpn_provider"
 fi
 
@@ -35,7 +35,7 @@ then
 	fi
 elif [ -f "/volumes/config/openvpn-config.txt"]
 then
-	openvpn_config="/volumes/config/openvpn-config.txt"
+	openvpn_config=`cat /volumes/config/openvpn-config.txt`
 	OPENVPN_CONFIG=$vpn_provider_configs/${openvpn_config}.ovpn
 else 
 	echo "No VPN configuration provided. Using default."
