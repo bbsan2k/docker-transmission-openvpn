@@ -43,10 +43,10 @@ then
 	  mkdir -p /volumes/config
 	  echo $OPENVPN_USERNAME > /volumes/config/openvpn-credentials.txt
 	  echo $OPENVPN_PASSWORD >> /volumes/config/openvpn-credentials.txt
-	  chmod 600 /config/openvpn-credentials.txt
+	  chmod 600 /volumes/config/openvpn-credentials.txt
 	fi
 else 
-	echo "$openvpn_credentials found. Proceeding with credentials from disk"
+	echo "$openvpn_credentials found. Proceeding with OpenVPN credentials from disk"
 fi
 
 #Check for Transmission Credentials 
@@ -57,7 +57,7 @@ then
 	echo $TRANSMISSION_RPC_USERNAME > /volumes/config/transmission-credentials.txt
 	echo $TRANSMISSION_RPC_PASSWORD >> /volumes/config/transmission-credentials.txt
 else 
-	echo "$transmission_credentials found. Proceeding with credentials from disk"
+	echo "$transmission_credentials found. Proceeding with Transmission credentials from disk"
 fi
 
 #Check for Transmission Configuration 
@@ -67,7 +67,7 @@ then
 	# Persist transmission settings for use by transmission-daemon
 	dockerize -template /etc/transmission/environment-variables.tmpl:/etc/transmission/environment-variables.sh /bin/true
 else 
-	echo "$transmission_configuration found. Proceeding with configuration from disk"
+	echo "$transmission_configuration found. Proceeding with Transmission configuration from disk"
 fi
 
 exec openvpn --config "$OPENVPN_CONFIG"
