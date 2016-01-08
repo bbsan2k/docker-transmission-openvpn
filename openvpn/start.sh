@@ -34,7 +34,7 @@ if [ ! -z "$OPENVPN_CONFIG" ]; then
 		OPENVPN_CONFIG=$vpn_provider_configs/default.ovpn
 	fi
 #No user OPENVPN_CONFIG provided checking for configuration on disk
-elif [ -f "/volumes/config/openvpn-config.txt"]; then
+elif [ -f "/volumes/config/openvpn-config.txt" ]; then
 	openvpn_config=`cat /volumes/config/openvpn-config.txt`
 	OPENVPN_CONFIG=$vpn_provider_configs/${openvpn_config}.ovpn
 #No user OPENVPN_CONFIG provided and no on disk. Not happening.
