@@ -16,9 +16,10 @@ then
 	fi
 else 
 	vpn_provider="/volumes/config/openvpn-provider.txt"
+	vpn_provider_configs="/etc/openvpn/$vpn_provider"
 fi
 
-echo "Using OpenVPN provider: $OPENVPN_PROVIDER"
+echo "Using OpenVPN provider: $vpn_provider"
 
 if [ ! -z "$OPENVPN_CONFIG" ]
 then
@@ -32,7 +33,11 @@ then
 		echo "Using default OpenVPN gateway for provider ${vpn_provider}"
 		OPENVPN_CONFIG=$vpn_provider_configs/default.ovpn
 	fi
-else
+elif [ -f "/volumes/config/openvpn-config.txt"]
+then
+	openvpn_config="/volumes/config/openvpn-config.txt"
+	OPENVPN_CONFIG=$vpn_provider_configs/${openvpn_config}.ovpn
+else 
 	echo "No VPN configuration provided. Using default."
 	OPENVPN_CONFIG=$vpn_provider_configs/default.ovpn
 fi
