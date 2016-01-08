@@ -12,7 +12,8 @@ if [ ! -f "/volumes/config/openvpn-provider.txt" ]; then
 	else 
 		echo $OPENVPN_PROVIDER > /volumes/config/openvpn-provider.txt
 	fi
-else 
+else
+	vpn_provider=${vpn_provider,,}
 	vpn_provider=`cat /volumes/config/openvpn-provider.txt`
 	vpn_provider_configs="/etc/openvpn/$vpn_provider"
 fi
