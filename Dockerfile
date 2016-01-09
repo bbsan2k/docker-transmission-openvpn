@@ -2,7 +2,7 @@
 #
 # Version 1.5
 
-FROM ubuntu:14.04
+FROM debian:wheezy
 MAINTAINER Kristian Haugene
 
 VOLUME /data
