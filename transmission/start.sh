@@ -2,8 +2,7 @@
 
 #Check for Transmission Configuration 
 transmission_configuration="/volumes/data/transmission-home/settings.json"
-if [ ! -f "$transmission-configuration" ];
-then
+if [ ! -f "$transmission_configuration" ]; then
 	# Source our persisted env variables from container startup
 	. /etc/transmission/environment-variables.sh
 else 
